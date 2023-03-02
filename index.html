@@ -1,69 +1,79 @@
 <html>
 
 <style>
-[draggable=true] {
-  cursor: grab;
-  
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-#target {
-  padding: 2em;
-}
-
-
-/* Unrelated Pen Styles*/
-html,
-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 0 auto;
-  padding: 1em;
-  box-sizing: border-box;
+#box {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
 }
 </style>
 <body>
-    <div>
-      <h1>Drag and Drop API</h1>
-      <p>Buffer element</p>
-      <p id="p1" draggable="true">This element is draggable.</p>
-      <div id="target" style="border: 1px dashed gray;">
-        Drop Zone
-      </div>
-  </div>
+    <div id="container">
+      <div id="box" draggable="true"></div>
+    </div>
 </body>
 <script>
-    /**
-* https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#Handle_the_drop_effect
-*/
+window.onload = function() {
+    // find the element that you want to drag.
 
-function dragstart_handler(ev) {
- // Add the target element's id to the data transfer object
- ev.dataTransfer.setData("text/plain", ev.target.id);
- ev.dataTransfer.dropEffect = "move";
+    var copy,
+        dragStartOffsetX,
+        dragStartOffsetY,
+        prevX,
+        prevY,
+        prevClientX,
+        prevClientY
+    box.addEventListener('dragstart', (e) => {
+      console.log('In Drag Start Event..')
+      dragStartOffsetX = e.offsetX
+      dragStartOffsetY = e.offsetY
+
+      //Cloning
+      copy = e.target.cloneNode(false)
+      copy.style.backgroundColor = 'red'
+      copy.style.opacity = 1
+      copy.style.position = 'absolute'
+      copy.style.zIndex = 9999
+      copy.style.left = '-999px'
+
+      e.target.parentNode.appendChild(copy)
+
+      //Hide Original Ghost Image
+      let dragImage = document.createElement("div");
+      dragImage.style.visibility = "hidden";
+      e.dataTransfer.setDragImage(dragImage, 0, 0);
+
+    })
+
+    box.addEventListener('drag', (e) => {
+      var rect = e.target.getBoundingClientRect();
+      var currX = e.clientX, currY = e.clientY
+      console.log('In Drag', currX, currY)
+      if (currX === 0 && currY === 0) {
+        currX = prevClientX;
+        currY = prevClientY;
+     }
+      if(prevClientX === currX && prevClientY === currY)
+        return
+
+      currX += (document.body.scrollLeft || document.documentElement.scrollLeft);
+      currY += (document.body.scrollTop || document.documentElement.scrollTop);
+      copy.style.left = (currX - dragStartOffsetX) + 'px'
+      copy.style.top = (currY - dragStartOffsetY) + 'px'
+
+      prevX = e.x
+      prevY = e.y
+      prevClientX = currX
+      prevClientY = currY
+    })
+
+    box.addEventListener('dragend', (e) => {
+      e.target.parentNode.removeChild(copy)
+    })
+
+  }
+  
 }
-function dragover_handler(ev) {
- ev.preventDefault();
- // Set the dropEffect to move
- ev.dataTransfer.dropEffect = "move"
-}
-function drop_handler(ev) {
- ev.preventDefault();
- // Get the id of the target and add the moved element to the target's DOM
- var data = ev.dataTransfer.getData("text/plain");
- ev.target.appendChild(document.getElementById(data));
-}
-
-document.getElementById('p1').addEventListener('dragstart', dragstart_handler)
-document.getElementById('target').addEventListener('dragover', dragover_handler)
-document.getElementById('target').addEventListener('drop', drop_handler)
-
-
 </script>
 </html>
