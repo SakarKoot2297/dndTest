@@ -24,7 +24,7 @@ window.onload = function() {
         prevY,
         prevClientX,
         prevClientY
-    box.addEventListener('dragstart', (e) => {
+    window.addEventListener('dragstart', (e) => {
       console.log('In Drag Start Event..')
 //       dragStartOffsetX = e.offsetX
 //       dragStartOffsetY = e.offsetY
@@ -46,7 +46,7 @@ window.onload = function() {
 
     })
 
-    box.addEventListener('drag', (e) => {
+    window.addEventListener('drag', (e) => {
        console.log('In Drag Event..')
 //       var rect = e.target.getBoundingClientRect();
 //       var currX = e.clientX, currY = e.clientY
@@ -69,7 +69,7 @@ window.onload = function() {
 //       prevClientY = currY
     })
 
-    box.addEventListener('dragend', (e) => {
+    window.addEventListener('dragend', (e) => {
        console.log('In Drag End Event..')
     })
 
