@@ -28,6 +28,16 @@ body {
   box-sizing: border-box;
 }
 </style>
+<body>
+    <div>
+      <h1>Drag and Drop API</h1>
+      <p>Buffer element</p>
+      <p id="p1" draggable="true">This element is draggable.</p>
+      <div id="target" style="border: 1px dashed gray;">
+        Drop Zone
+      </div>
+  </div>
+</body>
 <script>
     /**
 * https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#Handle_the_drop_effect
@@ -50,19 +60,10 @@ function drop_handler(ev) {
  ev.target.appendChild(document.getElementById(data));
 }
 
-
+document.getElementById('p1').addEventListener('dragstart', dragstart_handler)
+document.getElementById('target').addEventListener('dragover', dragover_handler)
+document.getElementById('target').addEventListener('drop', drop_handler)
 
 
 </script>
-<body>
-    <div>
-      <h1>Drag and Drop API</h1>
-      <p>Buffer element</p>
-      <p id="p1" draggable="true">This element is draggable.</p>
-      <div id="target" style="border: 1px dashed gray;">
-        Drop Zone
-      </div>
-  </div>
-</body>
-
 </html>
