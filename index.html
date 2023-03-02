@@ -7,6 +7,18 @@
   height: 100px;
   background-color: #ccc;
 }
+[draggable=true] {
+  cursor: grab;
+  
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+#target {
+  padding: 2em;
+}
+
 </style>
 <body>
     <div id="container">
