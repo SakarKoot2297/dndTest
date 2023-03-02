@@ -26,50 +26,51 @@ window.onload = function() {
         prevClientY
     box.addEventListener('dragstart', (e) => {
       console.log('In Drag Start Event..')
-      dragStartOffsetX = e.offsetX
-      dragStartOffsetY = e.offsetY
+//       dragStartOffsetX = e.offsetX
+//       dragStartOffsetY = e.offsetY
 
-      //Cloning
-      copy = e.target.cloneNode(false)
-      copy.style.backgroundColor = 'red'
-      copy.style.opacity = 1
-      copy.style.position = 'absolute'
-      copy.style.zIndex = 9999
-      copy.style.left = '-999px'
+//       //Cloning
+//       copy = e.target.cloneNode(false)
+//       copy.style.backgroundColor = 'red'
+//       copy.style.opacity = 1
+//       copy.style.position = 'absolute'
+//       copy.style.zIndex = 9999
+//       copy.style.left = '-999px'
 
-      e.target.parentNode.appendChild(copy)
+//       e.target.parentNode.appendChild(copy)
 
-      //Hide Original Ghost Image
-      let dragImage = document.createElement("div");
-      dragImage.style.visibility = "hidden";
-      e.dataTransfer.setDragImage(dragImage, 0, 0);
+//       //Hide Original Ghost Image
+//       let dragImage = document.createElement("div");
+//       dragImage.style.visibility = "hidden";
+//       e.dataTransfer.setDragImage(dragImage, 0, 0);
 
     })
 
     box.addEventListener('drag', (e) => {
-      var rect = e.target.getBoundingClientRect();
-      var currX = e.clientX, currY = e.clientY
-      console.log('In Drag', currX, currY)
-      if (currX === 0 && currY === 0) {
-        currX = prevClientX;
-        currY = prevClientY;
-     }
-      if(prevClientX === currX && prevClientY === currY)
-        return
+       console.log('In Drag Event..')
+//       var rect = e.target.getBoundingClientRect();
+//       var currX = e.clientX, currY = e.clientY
+//       console.log('In Drag', currX, currY)
+//       if (currX === 0 && currY === 0) {
+//         currX = prevClientX;
+//         currY = prevClientY;
+//      }
+//       if(prevClientX === currX && prevClientY === currY)
+//         return
 
-      currX += (document.body.scrollLeft || document.documentElement.scrollLeft);
-      currY += (document.body.scrollTop || document.documentElement.scrollTop);
-      copy.style.left = (currX - dragStartOffsetX) + 'px'
-      copy.style.top = (currY - dragStartOffsetY) + 'px'
+//       currX += (document.body.scrollLeft || document.documentElement.scrollLeft);
+//       currY += (document.body.scrollTop || document.documentElement.scrollTop);
+//       copy.style.left = (currX - dragStartOffsetX) + 'px'
+//       copy.style.top = (currY - dragStartOffsetY) + 'px'
 
-      prevX = e.x
-      prevY = e.y
-      prevClientX = currX
-      prevClientY = currY
+//       prevX = e.x
+//       prevY = e.y
+//       prevClientX = currX
+//       prevClientY = currY
     })
 
     box.addEventListener('dragend', (e) => {
-      e.target.parentNode.removeChild(copy)
+       console.log('In Drag End Event..')
     })
 
   }
